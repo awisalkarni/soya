@@ -18,18 +18,41 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SERVER_USERNAME: ${{ secrets.SERVER_USERNAME }}
           SERVER_IP: ${{ secrets.SERVER_IP }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
         run: |
           echo "$SSH_PRIVATE_KEY" > private_key
           chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key $SERVER_USERNAME@$SERVER_IP << 'EOF'
+            # Navigate to project directory
             cd /home/awislabs-soya/htdocs/soya.awislabs.com
+
+            # Ensure backup directory exists
+            mkdir -p /home/awislabs-soya/backups
+
+            # Backup the database using secrets
+            mysqldump -u $DB_USERNAME -p"$DB_PASSWORD" $DB_DATABASE > /home/awislabs-soya/backups/soya_$(date +%F_%T).sql
+
+            # Zip the project directory
+            zip -r /home/awislabs-soya/backups/soya_project_backup_$(date +%F_%T).zip ./*
+
+            # Pull the latest code
             git pull origin main
-            composer install
+
+            # Install PHP dependencies
+            composer install --no-interaction --prefer-dist --optimize-autoloader
+
+            # Run database migrations
             php artisan migrate --force
+
+            # Install Node.js dependencies and build assets
             npm install
+            npm run build
+
+            # Clear and cache configurations and routes
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache
-            npm run build
           EOF
           rm -f private_key
