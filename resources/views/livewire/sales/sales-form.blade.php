@@ -1,4 +1,3 @@
-<!-- resources/views/livewire/sales/sales-form.blade.php -->
 <div class="max-w-3xl mx-auto bg-white shadow-md rounded-lg p-6">
     <!-- Back to Dashboard Button -->
     <div class="mb-6">
@@ -46,38 +45,26 @@
     <!-- Cart Section -->
     <div class="mb-6">
         <h2 class="text-xl font-semibold text-gray-800 mb-4">Cart</h2>
-        <table class="w-full border-collapse">
-            <thead class="bg-gray-100">
-                <tr>
-                    <th class="p-3 text-left font-medium text-gray-700">Product</th>
-                    <th class="p-3 text-center font-medium text-gray-700">Qty</th>
-                    <th class="p-3 text-right font-medium text-gray-700">Price</th>
-                    <th class="p-3 text-right font-medium text-gray-700">Total</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white">
-                @foreach($cart as $index => $item)
-                <tr class="border-b border-gray-200">
-                    <td class="p-3 text-gray-800">{{ $item['name'] }}</td>
-                    <td class="p-3 text-center">
-                        <button wire:click="updateCart({{ $index }}, 'quantity', {{ $item['quantity'] - 1 }})"
-                            class="px-2 py-1 text-sm font-medium text-gray-700 bg-gray-200 rounded hover:bg-gray-300">-</button>
-                        <input type="text" wire:model.lazy="cart.{{ $index }}.quantity"
-                            class="w-12 p-2 text-center border border-gray-300 rounded-lg mx-2">
-                        <button wire:click="updateCart({{ $index }}, 'quantity', {{ $item['quantity'] + 1 }})"
-                            class="px-2 py-1 text-sm font-medium text-gray-700 bg-gray-200 rounded hover:bg-gray-300">+</button>
-                    </td>
-                    <td class="p-3 text-right text-gray-800">
-                        <input type="text" wire:model.lazy="cart.{{ $index }}.unit_price"
-                            class="w-24 p-2 text-right border border-gray-300 rounded-lg">
-                    </td>
-                    <td class="p-3 text-right text-gray-800">
-                        RM{{ number_format($item['total'], 2) }}
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <div class="space-y-4">
+            @foreach($cart as $index => $item)
+            <div class="flex flex-col md:flex-row md:justify-between items-center bg-gray-50 p-4 rounded-lg shadow">
+                <div class="flex-1 md:w-1/2 text-gray-800 font-medium">{{ $item['name'] }}</div>
+                <div class="flex items-center mt-4 md:mt-0">
+                    <button wire:click="updateCart({{ $index }}, 'quantity', {{ $item['quantity'] - 1 }})"
+                        class="px-2 py-1 text-sm font-medium text-gray-700 bg-gray-200 rounded hover:bg-gray-300">-</button>
+                    <input type="text" wire:model.lazy="cart.{{ $index }}.quantity"
+                        class="w-12 p-2 text-center border border-gray-300 rounded-lg mx-2">
+                    <button wire:click="updateCart({{ $index }}, 'quantity', {{ $item['quantity'] + 1 }})"
+                        class="px-2 py-1 text-sm font-medium text-gray-700 bg-gray-200 rounded hover:bg-gray-300">+</button>
+                </div>
+                <div class="flex flex-col md:flex-row items-center justify-between mt-4 md:mt-0 md:w-1/3 text-right">
+                    <input type="text" wire:model.lazy="cart.{{ $index }}.unit_price"
+                        class="w-full md:w-20 p-2 text-right border border-gray-300 rounded-lg md:mr-4">
+                    <div class="mt-2 md:mt-0 text-gray-800">RM{{ number_format($item['total'], 2) }}</div>
+                </div>
+            </div>
+            @endforeach
+        </div>
     </div>
 
     <!-- Total and Save Button -->
