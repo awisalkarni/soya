@@ -9,16 +9,16 @@ class Sale extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['company_id', 'product_id', 'payment_method_id', 'client_id', 'quantity', 'price', 'total'];
+    protected $fillable = ['company_id', 'client_id', 'payment_method_id', 'total'];
 
     public function company()
     {
         return $this->belongsTo(Company::class);
     }
 
-    public function product()
+    public function client()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Client::class);
     }
 
     public function paymentMethod()
@@ -26,8 +26,8 @@ class Sale extends Model
         return $this->belongsTo(PaymentMethod::class);
     }
 
-    public function client()
+    public function saleItems()
     {
-        return $this->belongsTo(Client::class);
+        return $this->hasMany(SaleItem::class);
     }
 }

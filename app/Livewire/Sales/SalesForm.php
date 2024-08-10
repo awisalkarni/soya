@@ -1,23 +1,23 @@
 <?php
-
-namespace App\Http\Modals\Livewire;
+namespace App\Livewire\Sales;
 
 use Livewire\Component;
 use App\Models\Product;
 use App\Models\Sale;
-
+use App\Models\SaleItem;
 
 class SalesForm extends Component
 {
-    public $company_id = 1; // Default to a specific company, can be dynamic
-    public $payment_method_id = 1; // Example: Default payment method, can be dynamic
+    public $company_id;
+    public $payment_method_id = 1; // Default payment method
     public $products;
     public $cart = [];
     public $totalAmount = 0;
     public $client_id = 1; // Default to "walk in"
 
-    public function mount()
+    public function mount($companyId)
     {
+        $this->company_id = $companyId;
         $this->loadProducts();
     }
 
@@ -73,17 +73,19 @@ class SalesForm extends Component
 
     public function saveSales()
     {
+        // Create a new sale record with client_id, company_id, payment_method_id, and total
         $sale = Sale::create([
             'company_id' => $this->company_id,
+            'client_id' => $this->client_id,
             'payment_method_id' => $this->payment_method_id,
             'total' => $this->totalAmount,
         ]);
 
+        // Loop through the cart items and create sale items associated with the sale
         foreach ($this->cart as $item) {
             SaleItem::create([
                 'sale_id' => $sale->id,
                 'product_id' => $item['id'],
-                'client_id' => $this->client_id,
                 'quantity' => $item['quantity'],
                 'unit_price' => $item['unit_price'],
                 'total' => $item['total'],
@@ -99,6 +101,6 @@ class SalesForm extends Component
 
     public function render()
     {
-        return view('livewire.modals.sales-form');
+        return view('livewire.sales.sales-form');
     }
 }

@@ -12,4 +12,9 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
-require __DIR__.'/auth.php';
+Route::get('/sales', function () {
+    $companyId = 1; // Default to a specific company, can be dynamic
+    return view('sales', compact('companyId'));
+})->name('sales.form');
+
+require __DIR__ . '/auth.php';
