@@ -58,6 +58,7 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Tauhu', 'price' => 1.00, 'company_id' => $company->id],
             ['name' => 'Tauhu 1 pek', 'price' => 5.00, 'company_id' => $company->id],
             ['name' => 'Tauhu pasar', 'price' => 0.75, 'company_id' => $company->id],
+            ['name' => 'Tauhu goreng pasar', 'price' => 0.90, 'company_id' => $company->id],
             ['name' => 'Fucuk 1 pek', 'price' => 5.00, 'company_id' => $company->id],
         ];
 
