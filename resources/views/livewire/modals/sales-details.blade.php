@@ -23,7 +23,7 @@
                 </thead>
                 <tbody>
                     @foreach($sale->saleItems as $item)
-                        <tr class="bg-white border-b flex flex-col md:table-row">
+                        <tr class="bg-white border-b">
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $item->product->name }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $item->quantity }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">RM{{ number_format($item->unit_price, 2) }}</td>
