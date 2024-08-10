@@ -68,8 +68,13 @@ class SalesForm extends Component
     public function updateCart($index, $field, $value)
     {
         if ($field === 'quantity') {
-            $this->cart[$index]['quantity'] = $value;
-            $this->cart[$index]['total'] = $this->cart[$index]['quantity'] * $this->cart[$index]['unit_price'];
+            if ($value <= 0) {
+                // Remove the item from the cart if quantity is 0 or less
+                array_splice($this->cart, $index, 1);
+            } else {
+                $this->cart[$index]['quantity'] = $value;
+                $this->cart[$index]['total'] = $this->cart[$index]['quantity'] * $this->cart[$index]['unit_price'];
+            }
         } elseif ($field === 'unit_price') {
             $this->cart[$index]['unit_price'] = $value;
             $this->cart[$index]['total'] = $this->cart[$index]['quantity'] * $this->cart[$index]['unit_price'];
