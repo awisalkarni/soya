@@ -34,9 +34,6 @@ jobs:
             # Backup the database using secrets
             mysqldump -u $DB_USERNAME -p"$DB_PASSWORD" $DB_DATABASE > /home/awislabs-soya/backups/soya_$(date +%F_%T).sql
 
-            # Zip the project directory
-            zip -r /home/awislabs-soya/backups/soya_project_backup_$(date +%F_%T).zip ./*
-
             # Pull the latest code
             git pull origin main
 
