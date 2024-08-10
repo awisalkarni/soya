@@ -4,7 +4,7 @@
     @if($sale)
         <!-- Sale Information -->
         <div class="mb-4">
-            <p><strong>Date:</strong> {{ $sale->created_at->format('d/m/Y') }}</p>
+            <p><strong>Date:</strong> {{ $sale->created_at->format('d/m/Y h:i A') }}</p>
             <p><strong>Client:</strong> {{ $sale->client->name }}</p>
             <p><strong>Total:</strong> RM{{ number_format($sale->total, 2) }}</p>
         </div>
@@ -23,7 +23,7 @@
                 </thead>
                 <tbody>
                     @foreach($sale->saleItems as $item)
-                        <tr class="bg-white border-b">
+                        <tr class="bg-white border-b flex flex-col md:table-row">
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $item->product->name }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $item->quantity }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">RM{{ number_format($item->unit_price, 2) }}</td>

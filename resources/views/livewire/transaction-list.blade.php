@@ -50,7 +50,7 @@
                 <tbody>
                     @forelse($sales as $sale)
                         <tr class="bg-white border-b">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $sale->created_at->format('d/m/Y') }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $sale->created_at->format('d/m/Y h:i A') }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $sale->client->name }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">RM{{ number_format($sale->total, 2) }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

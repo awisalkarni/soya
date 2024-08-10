@@ -70,7 +70,7 @@ class TransactionList extends Component
             $query->where('client_id', $this->client_id);
         }
 
-        $this->sales = $query->get();
+        $this->sales = $query->latest()->get();
     }
 
     public function render()
