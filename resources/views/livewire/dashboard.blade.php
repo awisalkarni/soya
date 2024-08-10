@@ -4,7 +4,7 @@
     <!-- Company Selection -->
     <div class="mb-6">
         <label for="company" class="block text-sm font-medium text-gray-700">Company:</label>
-        <select wire:model="selectedCompany" id="company" class="block w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+        <select wire:model.live="selectedCompany" id="company" class="block w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
             @foreach($companies as $company)
                 <option value="{{ $company->id }}">{{ $company->name }}</option>
             @endforeach
@@ -31,7 +31,7 @@
 
     <!-- Button to Sales Form -->
     <div class="text-right">
-        <a href="{{ route('sales.form', ['companyId' => $selectedCompany]) }}" class="inline-block bg-blue-500 text-white font-bold py-2 px-4 rounded-lg shadow hover:bg-blue-600 transition">
+        <a href="{{ route('sales.form') }}" class="inline-block bg-blue-500 text-white font-bold py-2 px-4 rounded-lg shadow hover:bg-blue-600 transition">
             Go to Sales Form
         </a>
     </div>

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Livewire\Sales;
 
 use Livewire\Component;
@@ -84,6 +85,12 @@ class SalesForm extends Component
 
     public function saveSales()
     {
+        // Check if the cart is empty
+        if (empty($this->cart)) {
+            session()->flash('error', 'Cannot save sales. The cart is empty.');
+            return;
+        }
+
         // Create a new sale record with client_id, company_id, payment_method_id, and total
         $sale = Sale::create([
             'company_id' => $this->company_id,
