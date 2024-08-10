@@ -1,0 +1,35 @@
+name: Deploy to Ubuntu Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to server
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SERVER_USERNAME: ${{ secrets.SERVER_USERNAME }}
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+        run: |
+          echo "$SSH_PRIVATE_KEY" > private_key
+          chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key $SERVER_USERNAME@$SERVER_IP << 'EOF'
+            cd /home/awislabs-soya/htdocs/soya.awislabs.com
+            git pull origin main
+            composer install
+            php artisan migrate --force
+            npm install
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+            npm run build
+          EOF
+          rm -f private_key
