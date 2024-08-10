@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         $user = User::create([
             'name' => 'soya',
             'email' => 'soya@awislabs.com',
-            'password' => bcrypt('soy@ten@k@321'),
+            'password' => bcrypt('S0y@1234'),
         ]);
 
         // Create a company

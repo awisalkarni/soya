@@ -41,6 +41,15 @@ class TransactionList extends Component
         }
     }
 
+    public function showDetails($saleId)
+    {
+        $sale = Sale::with('saleItems')->findOrFail($saleId);
+
+        // You can handle showing details here, e.g., open a modal or redirect to a details page
+        // Example: emit an event to open a modal
+        $this->emit('openSaleDetailsModal', $sale);
+    }
+
     public function filterSales()
     {
         $query = Sale::query();
