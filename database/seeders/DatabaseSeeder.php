@@ -17,16 +17,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
+        $user = User::create([
             'name' => 'soya',
-            'email' => 'soya@example.com',
+            'email' => 'soya@awislabs.com',
             'password' => bcrypt('soy@ten@k@321'),
         ]);
 
+        // Create a company
         $company = Company::create(['name' => 'Soya Tenaka']);
 
+        // Attach the user to the company
+        $company->users()->attach($user->id);
+
+        // Create payment methods
         $paymentMethods = [
             ['method' => 'Cash', 'company_id' => $company->id],
             ['method' => 'QR Code', 'company_id' => $company->id],
@@ -37,6 +40,7 @@ class DatabaseSeeder extends Seeder
             PaymentMethod::create($paymentMethod);
         }
 
+        // Create clients
         $clients = [
             ['name' => 'Walk In', 'company_id' => $company->id],
             ['name' => 'Rojak Rembau', 'company_id' => $company->id],
@@ -47,6 +51,7 @@ class DatabaseSeeder extends Seeder
             Client::create($client);
         }
 
+        // Create products
         $products = [
             ['name' => 'Air Soya', 'price' => 3.00, 'company_id' => $company->id],
             ['name' => 'Taufufa', 'price' => 3.00, 'company_id' => $company->id],

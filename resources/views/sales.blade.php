@@ -45,7 +45,7 @@
     <h1 class="text-xl font-bold mb-4">Sales Form</h1>
 
     <!-- SalesForm Livewire Component -->
-    <livewire:sales.sales-form :company_id="1" />
+    <livewire:sales.sales-form :company_id=$companyId />
 </div>
 
 @livewireScripts

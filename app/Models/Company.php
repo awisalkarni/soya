@@ -14,4 +14,9 @@ class Company extends Model
     {
         return $this->hasMany(Sale::class);
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'companies_users');
+    }
 }

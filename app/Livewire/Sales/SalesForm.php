@@ -5,25 +5,36 @@ use Livewire\Component;
 use App\Models\Product;
 use App\Models\Sale;
 use App\Models\SaleItem;
+use App\Models\PaymentMethod;
+use App\Models\Client;
 
 class SalesForm extends Component
 {
     public $company_id;
     public $payment_method_id = 1; // Default payment method
+    public $client_id = 1; // Default to "walk in"
     public $products;
     public $cart = [];
     public $totalAmount = 0;
-    public $client_id = 1; // Default to "walk in"
+    public $paymentMethods = [];
+    public $clients = [];
 
     public function mount($companyId)
     {
         $this->company_id = $companyId;
         $this->loadProducts();
+        $this->loadPaymentMethodsAndClients();
     }
 
     public function loadProducts()
     {
         $this->products = Product::where('company_id', $this->company_id)->get();
+    }
+
+    public function loadPaymentMethodsAndClients()
+    {
+        $this->paymentMethods = PaymentMethod::where('company_id', $this->company_id)->get();
+        $this->clients = Client::where('company_id', $this->company_id)->get();
     }
 
     public function addToCart($productId)
